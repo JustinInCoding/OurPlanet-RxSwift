@@ -64,6 +64,8 @@ struct EOEnvelope<Content: Decodable>: Decodable {
 			throw EOError.invalidDecoderConfiguration
 		}
 		let container = try decoder.container(keyedBy: CodingKeys.self)
+    print(Content.self)
 		content = try container.decode(Content.self, forKey: key)
+    print(content)
 	}
 }

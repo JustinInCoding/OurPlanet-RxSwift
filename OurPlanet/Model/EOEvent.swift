@@ -59,7 +59,22 @@ struct EOEvent: Decodable {
     title = try container.decode(String.self, forKey: .title)
     description = try container.decode(String.self, forKey: .description)
     link = try container.decode(URL?.self, forKey: .link)
-    closeDate = try container.decode(Date.self, forKey: .closeDate)
+
+//    if let closeDateStr = try? container.decode(String?.self, forKey: .closeDate) {
+//      let dateFormatter = DateFormatter()
+//      //    dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+//      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//      closeDate = dateFormatter.date(from: closeDateStr)
+//    } else {
+//      closeDate = nil
+//    }
+    
+    if let date = try? container.decode(Date?.self, forKey: .closeDate) {
+      closeDate = date
+    } else {
+      closeDate = nil
+    }
+    
     categories = try container.decode([EOEventCategory].self, forKey: .categories)
     // This may throw because we don't fully implement the GeoJSON spec. Let's igore those errors for now.
     locations = try? container.decode([EOLocation].self, forKey: .locations)
